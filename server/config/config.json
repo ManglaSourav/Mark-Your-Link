@@ -1,0 +1,10 @@
+{
+  "test": {
+    "MONGO_ATLAS_PW": "sourav@123",
+    "JWT_SECRET": "123456"
+  },
+  "development": {
+    "MONGO_ATLAS_PW": "sourav@123",
+    "JWT_SECRET": "1234567"
+  }
+}
