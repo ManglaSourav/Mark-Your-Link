@@ -6,17 +6,24 @@ export default class Cards extends Component {
   constructor(props) {
     super(props);
     this.countCategories = this.countCategories.bind(this);
+    let token = localStorage.getItem("auth-token");
+
     this.state = {
       // nCategory: 0,
       categories: [],
       links: [],
-      data: []
+      data: [],
+      loggedIn: token ? true : false
     };
   }
 
   async componentDidMount() {
     await axios
-      .get("http://localhost:4000/bookmark")
+      .get("http://localhost:4000/bookmark", {
+        params: {
+          token: localStorage.getItem("auth-token")
+        }
+      })
       .then(response => {
         this.setState({
           links: response.data
@@ -26,15 +33,18 @@ export default class Cards extends Component {
       .catch(err => {
         console.log(err);
       });
-    this.countCategories();
+    if (this.state.loggedIn) {
+      this.countCategories();
+    }
   }
- 
 
   async countCategories() {
     let dataForCat = await this.state.links.filter(link => {
       // console.log(link);
       return link.link === "";
     });
+    // console.log(dataForCat);
+
     await this.setState({
       categories: dataForCat
     });
@@ -45,30 +55,35 @@ export default class Cards extends Component {
       const test = cat.category;
       var links = linkData.filter(item => item.category === test);
       this.state.data.push(links);
-
       return test;
     });
     await this.setState({
       data: this.state.data
     });
-    // console.log(this.state.data);
   }
 
   render() {
-     return (
+    return (
       <Container>
         <Row>
-          {this.state.categories.map((category, i) => {
-            return (
-              <SingleCard
-                key={category._id}
-                category={category}
-                linksData={this.state.data[i]}
-              />
-            );
-          })}
+          {this.state.loggedIn ? (
+            this.state.categories.map((category, i) => {
+              return (
+                <SingleCard
+                  key={category._id}
+                  category={category}
+                  linksData={this.state.data[i]}
+                />
+              );
+            })
+          ) : (
+            <h1 className='m-5' style={{ color: "red" }}>
+              {" "}
+              You need to Login or Register
+            </h1>
+          )}
         </Row>
       </Container>
-    )// console.log(;
+    );
   }
 }

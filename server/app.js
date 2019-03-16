@@ -43,14 +43,14 @@ app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
     error: {
-      message: error.message
+      message: error.messageenv
     }
   });
 });
 
 //database connectivity
 //for  local connectivity
-// mongoose.connect("mongodb://localhost/bookmark", { useNewUrlParser: true });
+// mongoose.connect("mongodb://localhost/test", { useNewUrlParser: true });
 // console.log(process.env.MONGO_URI, process.env.JWT_SECRET);
 
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true });

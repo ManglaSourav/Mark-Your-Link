@@ -6,8 +6,8 @@ export default class LoginModal extends Component {
     super(props);
 
     this.state = {
-      email: "mangla.sourav96@gmail.com",
-      password: "sourav@123"
+      email: "",
+      password: ""
     };
   }
   onAddEmail = e => {
@@ -31,9 +31,10 @@ export default class LoginModal extends Component {
       .post("http://localhost:4000/users/login", user)
       .then(response => {
         const token = response.data["x-auth"];
-        // console.log(response.headers.Body);
+        console.log(response.data);
         localStorage.setItem("auth-token", token);
         //access x-auth token and stored that into localstorage
+        window.location.reload();
       })
       .catch(function(response) {
         console.log(response);
@@ -54,7 +55,7 @@ export default class LoginModal extends Component {
         aria-labelledby='contained-modal-title-vcenter'
         centered>
         <Modal.Header closeButton>
-          <Modal.Title id='contained-modal-title-vcenter'>Register</Modal.Title>
+          <Modal.Title id='contained-modal-title-vcenter'>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>

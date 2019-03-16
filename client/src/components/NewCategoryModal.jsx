@@ -24,9 +24,11 @@ export default class NewCategoryModal extends Component {
     const newBookmark = {
       link: "",
       description: "",
-      category: this.state.category
+      category: this.state.category,
+      token: localStorage.getItem("auth-token")
     };
     // console.log(newBookmark);
+
     axios
       .post("http://localhost:4000/bookmark/add", newBookmark)
       .then(res => console.log(res.data))

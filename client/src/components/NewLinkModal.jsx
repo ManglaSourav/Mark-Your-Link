@@ -28,16 +28,16 @@ export default class NewLinkModal extends Component {
     const newLink = {
       link: this.state.link,
       description: this.state.description,
-      category: category
+      category: category,
+      token: localStorage.getItem("auth-token")
     };
 
     axios
       .post("http://localhost:4000/bookmark/add", newLink)
       .then(res => console.log(res.data));
     window.location.reload();
-    
   }
-  
+
   render() {
     const category = this.props.category;
     return (
@@ -47,8 +47,7 @@ export default class NewLinkModal extends Component {
         aria-labelledby='contained-modal-title-vcenter'
         centered>
         <Modal.Header closeButton>
-          <Modal.Title
-            id='contained-modal-title-vcenter'>
+          <Modal.Title id='contained-modal-title-vcenter'>
             Add new {category}
           </Modal.Title>
         </Modal.Header>

@@ -4,7 +4,6 @@ import axios from "axios";
 export default class RegisterModal extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       name: "",
       email: "",
