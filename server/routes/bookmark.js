@@ -19,6 +19,8 @@ router.get("/", async function(req, res, next) {
 });
 
 router.post("/add", function(req, res) {
+  console.log(req.data);
+  
   const user = User.findByToken(req.body.token);
   const data = _.pick(req.body, ["link", "description", "category"]);
   data["user"] = user._conditions._id;

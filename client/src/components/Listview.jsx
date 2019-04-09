@@ -8,7 +8,12 @@ export default class Listview extends Component {
       <ListGroup variant='flush'>
         {data.map(item => {
           return (
-            <ListGroup.Item key={item._id}> {item.link || []}</ListGroup.Item>
+            <ListGroup.Item key={item._id}>
+              {" "}
+              <a href={item.link || []} target='_blank'>
+                {item.link || []}
+              </a>{" "}
+            </ListGroup.Item>
           );
         })}
       </ListGroup>

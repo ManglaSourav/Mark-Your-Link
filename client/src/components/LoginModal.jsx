@@ -28,7 +28,7 @@ export default class LoginModal extends Component {
 
     //axios post request
     axios
-      .post("http://localhost:4000/users/login", user)
+      .post("/users/login", user)
       .then(response => {
         const token = response.data["x-auth"];
         console.log(response.data);

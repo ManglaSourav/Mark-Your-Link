@@ -44,7 +44,7 @@ export default class RegisterModal extends Component {
 
       //axios post request
       axios
-        .post("http://localhost:4000/users/register", newUser)
+        .post("/users/register", newUser)
         .then(res => console.log(res.data))
         .catch(function(response) {
           console.log(response);

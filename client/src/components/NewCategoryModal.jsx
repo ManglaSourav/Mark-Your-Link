@@ -27,15 +27,14 @@ export default class NewCategoryModal extends Component {
       category: this.state.category,
       token: localStorage.getItem("auth-token")
     };
-    // console.log(newBookmark);
+    console.log(newBookmark);
 
     axios
-      .post("http://localhost:4000/bookmark/add", newBookmark)
-      .then(res => console.log(res.data))
+      .post("/bookmark/add", newBookmark)
+      .then(res => window.location.reload())
       .catch(function(response) {
         console.log(response);
       });
-    window.location.reload();
   }
 
   render() {

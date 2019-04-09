@@ -19,7 +19,7 @@ export default class Cards extends Component {
 
   async componentDidMount() {
     await axios
-      .get("http://localhost:4000/bookmark", {
+      .get("/bookmark", {
         params: {
           token: localStorage.getItem("auth-token")
         }

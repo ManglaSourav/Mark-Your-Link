@@ -3,6 +3,7 @@ const validator = require("validator");
 const jwt = require("jsonwebtoken");
 const _ = require("lodash");
 const bcrypt = require("bcryptjs");
+const keys = require("../config/keys");
 var UserSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -54,7 +55,7 @@ UserSchema.methods.generateAuthToken = function() {
   var token = jwt
     .sign(
       { _id: user._id.toHexString() },
-      process.env.JWT_SECRET || "sourav1234"
+      keys.secretOrKey
     )
     .toString();
 
@@ -72,7 +73,7 @@ UserSchema.statics.findByToken = function(token) {
 
   try {
     //here we dont want to send what type of error is thats why we use try catch block
-    decoded = jwt.verify(token, process.env.JWT_SECRET || "sourav1234");
+    decoded = jwt.verify(token, keys.secretOrKey);
   } catch (e) {
     return Promise.reject();
   }

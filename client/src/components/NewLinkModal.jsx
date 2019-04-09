@@ -33,9 +33,8 @@ export default class NewLinkModal extends Component {
     };
 
     axios
-      .post("http://localhost:4000/bookmark/add", newLink)
-      .then(res => console.log(res.data));
-    window.location.reload();
+      .post("/bookmark/add", newLink)
+      .then(res => window.location.reload());
   }
 
   render() {
