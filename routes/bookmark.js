@@ -4,15 +4,14 @@ const Bookmark = require("../models/bookmark");
 const User = require("../models/user");
 const _ = require("lodash");
 
-router.get("/", async function(req, res, next) {
+router.get("/",  function(req, res, next) {
   const user = User.findByToken(req.query.token);
   //{ "_id": user._conditions._id}<-- put this is in find for user._id key
-  await Bookmark.find({ user: user._conditions._id},function(err, bookmark) {
+   Bookmark.find({ user: user._conditions._id},function(err, bookmark) {
     if (err) {
       console.log(err);
     } else {
       // console.log(bookmark);
-      
       res.json(bookmark);
     }
   });

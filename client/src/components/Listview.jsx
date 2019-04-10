@@ -10,7 +10,7 @@ export default class Listview extends Component {
           return (
             <ListGroup.Item key={item._id}>
               {" "}
-              <a href={item.link || []} target='_blank'>
+              <a href={item.link || []} >
                 {item.link || []}
               </a>{" "}
             </ListGroup.Item>

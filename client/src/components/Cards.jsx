@@ -17,24 +17,26 @@ export default class Cards extends Component {
     };
   }
 
-  async componentDidMount() {
-    await axios
-      .get("/bookmark", {
-        params: {
-          token: localStorage.getItem("auth-token")
-        }
-      })
-      .then(response => {
-        this.setState({
-          links: response.data
+  componentDidMount() {
+    if (localStorage.getItem("auth-token")) {
+      axios
+        .get("/bookmark", {
+          params: {
+            token: localStorage.getItem("auth-token")
+          }
+        })
+        .then(response => {
+          this.setState({
+            links: response.data
+          });
+          // console.log(this.state.links);
+        })
+        .catch(err => {
+          console.log(err);
         });
-        // console.log(this.state.links);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    if (this.state.loggedIn) {
-      this.countCategories();
+      if (this.state.loggedIn) {
+        this.countCategories();
+      }
     }
   }
 
