@@ -17,9 +17,9 @@ export default class Cards extends Component {
     };
   }
 
-  componentDidMount() {
-    if (localStorage.getItem("auth-token")) {
-      axios
+   async componentDidMount() {
+      if (localStorage.getItem("auth-token")) {
+     await axios
         .get("/bookmark", {
           params: {
             token: localStorage.getItem("auth-token")

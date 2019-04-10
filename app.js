@@ -8,11 +8,9 @@ const homeRoutes = require("./routes/index");
 const bookmarkRoutes = require("./routes/bookmark");
 const usersRoutes = require("./routes/user");
 const keys = require("./config/keys");
-// var proces = require("nodemon.json");
 app = express();
 
 // Middlewares
-
 //for logging everthing
 app.use(morgan("dev"));
 
