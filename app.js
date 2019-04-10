@@ -65,11 +65,17 @@ app.use((error, req, res, next) => {
 // mongoose.connect("mongodb://localhost/test", { useNewUrlParser: true });
 // console.log(process.env.MONGO_URI, process.env.JWT_SECRET);
 
-mongoose.connect(keys.mongoURI, { useNewUrlParser: true });
+mongoose.connect(keys.mongoURI, {
+  useCreateIndex: true,
+  useNewUrlParser: true
+});
 const connection = mongoose.connection;
 connection.once("open", function() {
   console.log("mongodb connecton established successfully");
 });
 
 //server configuration
-app.listen(4000);
+
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => console.log(`Server running on port ${port}`));
