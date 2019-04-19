@@ -1,6 +1,0 @@
-{
-  "env": {
-    "MONGO_URI": "mongodb+srv://sourav:sourav@123@node-bookmark-manager-2h8zl.mongodb.net/local_library?retryWrites=true",
-    "JWT_SECRET": "12345678"
-  }
-}
