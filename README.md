@@ -1,5 +1,5 @@
-# Bookmark-Manager
-Simple Bookmark App in MERN-Stack
+# Mark Your Link
+Bookmark Manager App in MERN-Stack
 
 # [**Mark-Your-Link**](https://sourav-bookmark-manager.herokuapp.com/index.html)
 
