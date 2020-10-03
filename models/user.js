@@ -21,10 +21,40 @@ var UserSchema = new mongoose.Schema({
       message: `{VALUE} is not a valid email`
     }
   },
+  name: {
+    type: String,
+    required: true,
+  },
+  person_id: {
+    type: String,
+    required: true,
+    unique: true,
+    minlength: 4
+  },
   password: {
     type: String,
     required: true,
     minlength: 6
+  },
+  type: {
+    type: String,
+    required: true,
+  },
+  sendFeedback: {
+    type: [Map],
+    default: []
+  },
+  receivedFeedback: {
+    type: [Map],
+    default: []
+  },
+  sendThankyou: {
+    type: [Map],
+    default: []
+  },
+  receivedThankyou: {
+    type: [Map],
+    default: [] 
   },
   tokens: [
     {
@@ -40,14 +70,14 @@ var UserSchema = new mongoose.Schema({
   ]
 });
 
-UserSchema.methods.toJSON = function() {
+UserSchema.methods.toJSON = function () {
   //overrite mongoose inbuilt method
   var user = this;
   var userObject = user.toObject();
   return _.pick(userObject, ["_id", "email"]);
 };
 
-UserSchema.methods.generateAuthToken = function() {
+UserSchema.methods.generateAuthToken = function () {
   var user = this;
   var access = "auth";
   // console.log(process.env.JWT_SECRET);
@@ -66,7 +96,7 @@ UserSchema.methods.generateAuthToken = function() {
     return token;
   });
 };
-UserSchema.statics.findByToken = function(token) {
+UserSchema.statics.findByToken = function (token) {
   //this is model method that why we use statics
   var User = this;
   var decoded;
@@ -83,7 +113,7 @@ UserSchema.statics.findByToken = function(token) {
     "tokens.access": "auth"
   });
 };
-UserSchema.pre("save", function(next) {
+UserSchema.pre("save", function (next) {
   var user = this;
 
   if (user.isModified("password")) {
@@ -97,7 +127,7 @@ UserSchema.pre("save", function(next) {
     next();
   }
 });
-UserSchema.statics.findByCredentials = function(email, password) {
+UserSchema.statics.findByCredentials = function (email, password) {
   var User = this;
 
   return User.findOne({ email }).then(user => {
@@ -116,7 +146,7 @@ UserSchema.statics.findByCredentials = function(email, password) {
     });
   });
 };
-UserSchema.methods.removeToken = function(token) {
+UserSchema.methods.removeToken = function (token) {
   var user = this;
 
   return user.update({
