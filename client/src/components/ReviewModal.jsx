@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { Form, Modal, Button, Dropdown, DropdownButton } from "react-bootstrap";
 import axios from "axios";
-export default class RegisterModal extends Component {
+import jwt_decode from "jwt-decode";
+
+export default class ReviewModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
       person_id: "",
-      type: "Designation",
+      // type: "Designation",
       email: "",
       password1: "",
       password2: "",
@@ -46,26 +48,32 @@ export default class RegisterModal extends Component {
   onTeacherClick = (e) => {
     this.setState({ type: "Teacher" });
   };
-  onRegister = (hide) => {
+  onSubmit = (hide) => {
     if (this.state.password1 !== this.state.password2) {
       alert("Passwords don't match");
     } else {
-      if (this.state.type == "Designation") {
-        alert("Select a designation");
-        return;
-      }
-      let newUser = {
-        name: this.state.name,
-        email: this.state.email,
-        type: this.state.type,
-        person_id: this.state.person_id,
-        password: this.state.password1,
+      // if (this.state.type == "Designation") {
+      //   alert("Select a designation");
+      //   return;
+      // }
+      let token = localStorage.getItem("auth-token");
+      let decodedData = jwt_decode(token);
+      console.log(decodedData);
+
+      let reviewData = {
+        // sender, receiver, HOD or manager
+        sender_id: decodedData._id,
+        receiver_name: this.state.name,
+        receiver_email: this.state.email,
+        // type: this.state.type,
+        // person_id: this.state.person_id,
+        // password: this.state.password1,
       };
-      console.log("user", newUser);
+      console.log("user", reviewData);
 
       //axios post request
       axios
-        .post("/users/register", newUser)
+        .post("/users/feedback", reviewData)
         .then((res) => console.log(res.data))
         .catch(function (response) {
           console.log(response);
@@ -74,16 +82,17 @@ export default class RegisterModal extends Component {
       this.setState({
         name: "",
         email: "",
-        person_id: "",
-        password1: "",
-        password2: "",
-        type: "Designation",
+        // person_id: "",
+        // password1: "",
+        // password2: "",
+        // type: "Designation",
       });
       hide();
     }
   };
 
   render() {
+    const { type } = this.props;
     return (
       <Modal
         {...this.props}
@@ -91,20 +100,20 @@ export default class RegisterModal extends Component {
         aria-labelledby="contained-modal-title-vcenter"
         centered>
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">Register</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">{type}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group>
-              <Form.Label>Full Name</Form.Label>
+              <Form.Label>To </Form.Label>
               <Form.Control
                 type="text"
                 value={this.state.name}
                 onChange={this.onAddName}
-                placeholder="Enter Name"
+                placeholder="Enter Receiver Name"
               />
             </Form.Group>
-            <Form.Group style={{ display: "flex" }}>
+            {/* <Form.Group style={{ display: "flex" }}>
               <DropdownButton
                 size="sm"
                 variant="secondary"
@@ -131,10 +140,10 @@ export default class RegisterModal extends Component {
                   }
                 />
               )}
-            </Form.Group>
+            </Form.Group> */}
 
             <Form.Group>
-              <Form.Label>Email address</Form.Label>
+              <Form.Label> Receiver Email </Form.Label>
               <Form.Control
                 type="email"
                 value={this.state.email}
@@ -143,7 +152,7 @@ export default class RegisterModal extends Component {
               />
             </Form.Group>
 
-            <Form.Group>
+            {/* <Form.Group>
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
@@ -161,12 +170,12 @@ export default class RegisterModal extends Component {
                 onChange={this.onAddPassword2}
                 placeholder="Enter Password "
               />
-            </Form.Group>
+            </Form.Group> */}
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => this.onRegister(this.props.onHide)}>
-            Register
+          <Button onClick={() => this.onSubmit(this.props.onHide)}>
+            Submit
           </Button>
         </Modal.Footer>
       </Modal>

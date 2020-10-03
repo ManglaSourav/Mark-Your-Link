@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import NewCategoryModal from "./NewCategoryModal";
 import LoginModal from "./LoginModal";
-import logo from "./logo.png"
+import logo from "./logo.png";
 import RegisterModal from "./RegisterModal";
 export default class CustomNavbar extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ export default class CustomNavbar extends Component {
       CatShow: false,
       loginShow: false,
       registerShow: false,
-      loggedIn: token ? true : false
+      loggedIn: token ? true : false,
     };
   }
   create = () => {
@@ -44,25 +44,26 @@ export default class CustomNavbar extends Component {
 
     return (
       <div>
-        <Navbar className='bg-danger' expand='lg'>
-          <Navbar.Brand href='#home'>
+        <Navbar className="bg-danger" expand="lg">
+          <Navbar.Brand href="#home">
             <img
               src={logo}
-              width='30'
-              height='30'
-              className='logo ml-3 mr-3'
-              alt='logo'
+              width="30"
+              height="30"
+              className="logo ml-3 mr-3"
+              alt="logo"
             />
-          Bookmark Manager</Navbar.Brand>
-          <Navbar.Toggle aria-controls='basic-navbar-nav' />
-          <Navbar.Collapse id='basic-navbar-nav'>
-            <Nav className='mr-auto'>
+            Bookmark Manager
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mr-auto">
               {/* <Nav.Link href='/'>Home</Nav.Link>
               <Nav.Link href='/'>Link</Nav.Link> */}
             </Nav>
             {!this.state.loggedIn ? (
               <div>
-                <Button onClick={this.register} className='mr-2'>
+                <Button onClick={this.register} className="mr-2">
                   Register
                 </Button>
                 <RegisterModal
@@ -74,10 +75,10 @@ export default class CustomNavbar extends Component {
               </div>
             ) : (
               <div>
-                <Button onClick={this.create} className='mr-2'>
-                  New Category
+                <Button onClick={this.create} className="mr-2">
+                  My profile
                 </Button>
-                <NewCategoryModal show={this.state.CatShow} onHide={CatClose} />
+                {/* <NewCategoryModal show={this.state.CatShow} onHide={CatClose} /> */}
                 <Button onClick={this.logout}>Logout</Button>
               </div>
             )}
