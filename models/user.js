@@ -41,20 +41,20 @@ var UserSchema = new mongoose.Schema({
     required: true,
   },
   sendFeedback: {
-    type: [Map],
+    type: [Object],
     default: []
   },
   receivedFeedback: {
-    type: [Map],
+    type: [Object],
     default: []
   },
   sendThankyou: {
-    type: [Map],
+    type: [Object],
     default: []
   },
   receivedThankyou: {
-    type: [Map],
-    default: [] 
+    type: [Object],
+    default: []
   },
   tokens: [
     {

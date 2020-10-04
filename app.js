@@ -5,7 +5,6 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
 const homeRoutes = require("./routes/index");
-const bookmarkRoutes = require("./routes/bookmark");
 const usersRoutes = require("./routes/user");
 const keys = require("./config/keys");
 app = express();
@@ -28,7 +27,6 @@ app.use(cors(corsOptions));
 
 //to handle routes
 app.use("/", homeRoutes);
-app.use("/bookmark", bookmarkRoutes);
 app.use("/users", usersRoutes);
 
 // Server static assets if in production

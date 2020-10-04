@@ -52,30 +52,53 @@ router.post("/login", (req, res) => {
     });
 });
 
-router.post("/feedback", (req, res) => {
+router.post("/feedback", async (req, res) => {
 
   console.log(req.body);
-  User.update(
-    { _id: req.body.sender_id },
-    { $push: { sendFeedback: { ...req.body } } }
-  )
+  try {
+    const nodemailer = require("nodemailer");
+    let testAccount = await nodemailer.createTestAccount();
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      host: 'smtp.gmail.com',
+      // port: 587,
+      // secure: false, // true for 465, false for other ports
+      auth: {
+        user: "voidcoder1@gmail.com", // generated ethereal user
+        pass: "yse@21012002", // generated ethereal password
+      },
+    });
 
-  // TODO: 1. maintain count of feedback or thankyou
-  // 2. store the feedback against sender as well as for receiver
-  // 3. send the mail 
+    // send mail with defined transport object
+    let info = await transporter.sendMail({
+      from: '"Test" <souravmangla0@gmail.com>', // sender address
+      to: "souravmangla0@gmail.com, mangla.sourav96@gmail.com", // list of receivers
+      subject: "Test", // Subject line
+      text: "Feedback From: " + req.body.feedback, // plain text body
+      html: "<b>Hello world?</b>", // html body
+    });
+
+    console.log("Message sent: %s", info.messageId);
+    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+    // Preview only available when sending through an Ethereal account
+    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 
 
-  // var body = _.pick(req.body, ["email", "password"]);
+    // const userData = await User.findById(req.body.sender_id);
+    // console.log("user Data", userData)
+    // userData.sendFeedback.push(req.body);
+    // userData.save();
 
-  // User.findByCredentials(body.email, body.password)
-  //   .then(user => {
-  //     return user.generateAuthToken().then(token => {
-  //       res.send({ user, "x-auth": token }); //.header("x-auth", token).send(user);
-  //     });
-  //   })
-  //   .catch(e => {
-  //     res.status(400).send(e);
-  //   });
+    // const receiverData = await User.find({ email: req.body.receiver_email });
+    // console.log(receiverData)
+    // receiverData[0].receivedFeedback.push(req.body);
+    // receiverData[0].save();
+    // gmail
+
+  } catch (err) {
+    console.log(err.message);
+  }
 });
 
 module.exports = router;
