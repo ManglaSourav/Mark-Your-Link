@@ -28,6 +28,6 @@
     "mongoose": "^5.4.16",
     "monk": "^6.0.6",
     "morgan": "~1.9.0",
-    "validator": "^10.11.0"
+    "validator": "^13.7.0"
   }
 }
